@@ -1,0 +1,29 @@
+# ─── Build output ────────────────────────────
+target/
+*.class
+*.jar
+*.war
+
+# ─── Maven ───────────────────────────────────
+.mvn/
+mvnw
+mvnw.cmd
+
+# ─── IDE files ───────────────────────────────
+.idea/
+*.iml
+.vscode/
+.settings/
+.classpath
+.project
+*.swp
+*.swo
+*~
+
+# ─── OS files ────────────────────────────────
+.DS_Store
+Thumbs.db
+desktop.ini
+
+# ─── Logs ────────────────────────────────────
+*.log
