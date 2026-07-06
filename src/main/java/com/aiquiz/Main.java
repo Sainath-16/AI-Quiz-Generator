@@ -33,18 +33,18 @@ public class Main {
 
     public static void main(String[] args) {
 
-        // ─── SERVICE WIRING ─────────────────────────────────────────────
-        // 🔌 SWAP POINT: Replace MockAIQuestionGenerator with a real LLM
-        //    implementation (e.g., OpenAIQuestionGenerator, GeminiQuestionGenerator)
-        //    to enable actual AI-powered question generation.
+        // --- SERVICE WIRING ---------------------------------------------
+        // [LLM] SWAP POINT: Replace MockAIQuestionGenerator with a real LLM
+        //       implementation (e.g., OpenAIQuestionGenerator, GeminiQuestionGenerator)
+        //       to enable actual AI-powered question generation.
         QuestionGeneratorService generator = new MockAIQuestionGenerator();
         AnswerValidationService  validator = new AnswerValidationService();
         QuizService              quizService = new QuizService(generator, validator);
 
-        // ─── I/O ────────────────────────────────────────────────────────
+        // --- I/O --------------------------------------------------------
         Scanner scanner = new Scanner(System.in);
 
-        // ─── MAIN APPLICATION LOOP ──────────────────────────────────────
+        // --- MAIN APPLICATION LOOP --------------------------------------
         boolean running = true;
 
         while (running) {
@@ -73,7 +73,7 @@ public class Main {
 
             ConsoleUtils.printQuizHeader(selectedTopic, quiz.totalQuestions());
 
-            // 5. Question loop — present each question and validate in real-time
+            // 5. Question loop - present each question and validate in real-time
             for (int i = 0; i < quiz.questions().size(); i++) {
                 Question question = quiz.questions().get(i);
 
@@ -104,20 +104,20 @@ public class Main {
         scanner.close();
     }
 
-    // ═══════════════════════════════════════════════════════════════════
-    //  HELPER METHODS — Input Prompting
-    // ═══════════════════════════════════════════════════════════════════
+    // ===================================================================
+    //  HELPER METHODS - Input Prompting
+    // ===================================================================
 
     /**
      * Prompts the user to select a topic by number. Retries on invalid input.
      *
      * @param scanner    the input scanner
      * @param maxOption  the maximum valid option number (number of topics)
-     * @return the selected option number (0 = exit, 1–N = topic index)
+     * @return the selected option number (0 = exit, 1-N = topic index)
      */
     private static int promptForTopicChoice(Scanner scanner, int maxOption) {
         while (true) {
-            System.out.print(ConsoleUtils.YELLOW + "  ➤ Enter your choice [0-" + maxOption + "]: " + ConsoleUtils.RESET);
+            System.out.print(ConsoleUtils.YELLOW + "  > Enter your choice [0-" + maxOption + "]: " + ConsoleUtils.RESET);
 
             String input = scanner.nextLine().trim();
 
@@ -127,11 +127,11 @@ public class Main {
                     return choice;
                 }
                 System.out.println(ConsoleUtils.RED
-                        + "  ⚠ Please enter a number between 0 and " + maxOption + "."
+                        + "  [!] Please enter a number between 0 and " + maxOption + "."
                         + ConsoleUtils.RESET);
             } catch (NumberFormatException e) {
                 System.out.println(ConsoleUtils.RED
-                        + "  ⚠ Invalid input. Please enter a number."
+                        + "  [!] Invalid input. Please enter a number."
                         + ConsoleUtils.RESET);
             }
         }
@@ -163,11 +163,11 @@ public class Main {
      * Asks the user if they want to play another round.
      *
      * @param scanner the input scanner
-     * @return {@code true} to continue, {@code false} to exit
+     * @param return {@code true} to continue, {@code false} to exit
      */
     private static boolean promptPlayAgain(Scanner scanner) {
         System.out.print(ConsoleUtils.CYAN + ConsoleUtils.BOLD
-                + "  🔄 Would you like to take another quiz? (Y/N): "
+                + "  [AGAIN] Would you like to take another quiz? (Y/N): "
                 + ConsoleUtils.RESET);
         String input = scanner.nextLine().trim().toUpperCase();
         if (input.equals("Y") || input.equals("YES")) {
@@ -184,7 +184,7 @@ public class Main {
         System.out.println();
         ConsoleUtils.printSeparator();
         System.out.println(ConsoleUtils.CYAN + ConsoleUtils.BOLD
-                + "  👋 Thanks for using the AI Quiz Generator! Goodbye!"
+                + "  [EXIT] Thanks for using the AI Quiz Generator! Goodbye!"
                 + ConsoleUtils.RESET);
         ConsoleUtils.printSeparator();
         System.out.println();

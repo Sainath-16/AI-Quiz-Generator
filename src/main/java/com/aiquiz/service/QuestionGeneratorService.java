@@ -10,8 +10,8 @@ import java.util.List;
  * <p><strong>Extension Point:</strong> This interface allows swapping
  * between different question generation strategies:
  * <ul>
- *   <li>{@code MockAIQuestionGenerator} — returns pre-built questions (default)</li>
- *   <li>A future LLM-backed implementation — calls OpenAI, Gemini, etc.</li>
+ *   <li>{@code MockAIQuestionGenerator} - returns pre-built questions (default)</li>
+ *   <li>A future LLM-backed implementation - calls OpenAI, Gemini, etc.</li>
  * </ul>
  *
  * <p>To integrate a real AI/LLM API, create a new class that implements

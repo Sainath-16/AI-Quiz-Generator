@@ -50,7 +50,7 @@ public class QuizResult {
         }
     }
 
-    // ─── Accessors ──────────────────────────────────────────────────────
+    // --- Accessors ------------------------------------------------------
 
     public Quiz getQuiz() {
         return quiz;
@@ -65,7 +65,7 @@ public class QuizResult {
     }
 
     /**
-     * Returns the score as a percentage (0.0 – 100.0).
+     * Returns the score as a percentage (0.0 - 100.0).
      *
      * @return percentage score
      */
@@ -98,7 +98,7 @@ public class QuizResult {
         return "F";
     }
 
-    // ─── Inner Record ───────────────────────────────────────────────────
+    // --- Inner Record ---------------------------------------------------
 
     /**
      * Immutable snapshot of a single answer attempt.

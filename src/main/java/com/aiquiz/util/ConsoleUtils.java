@@ -8,13 +8,14 @@ import java.util.List;
 /**
  * Utility class for rendering styled CLI output.
  *
- * <p>Uses ANSI escape codes for colors and formatting. If the terminal
- * does not support ANSI codes, the output will still be readable (just
- * without color).
+ * <p>Uses ANSI escape codes for colors and formatting. Uses pure ASCII
+ * characters (0-127) for boxes, borders, and indicators so that output
+ * renders flawlessly on 100% of Windows terminals without question marks
+ * or character encoding errors.
  */
 public final class ConsoleUtils {
 
-    // ─── ANSI Color Codes ───────────────────────────────────────────────
+    // --- ANSI Color Codes -----------------------------------------------
     public static final String RESET       = "\033[0m";
     public static final String BOLD        = "\033[1m";
     public static final String DIM         = "\033[2m";
@@ -42,10 +43,10 @@ public final class ConsoleUtils {
      */
     public static void printBanner() {
         System.out.println();
-        System.out.println(CYAN + BOLD + "╔══════════════════════════════════════════════════════════╗" + RESET);
-        System.out.println(CYAN + BOLD + "║" + RESET + YELLOW + BOLD + "          🧠  AI QUIZ GENERATOR  🧠                    " + RESET + CYAN + BOLD + "║" + RESET);
-        System.out.println(CYAN + BOLD + "║" + RESET + DIM + "       Dynamically Generated • Auto-Validated           " + RESET + CYAN + BOLD + "║" + RESET);
-        System.out.println(CYAN + BOLD + "╚══════════════════════════════════════════════════════════╝" + RESET);
+        System.out.println(CYAN + BOLD + "+----------------------------------------------------------+" + RESET);
+        System.out.println(CYAN + BOLD + "|" + RESET + YELLOW + BOLD + "                 [ AI QUIZ GENERATOR ]                    " + RESET + CYAN + BOLD + "|" + RESET);
+        System.out.println(CYAN + BOLD + "|" + RESET + DIM + "          Dynamically Generated * Auto-Validated          " + RESET + CYAN + BOLD + "|" + RESET);
+        System.out.println(CYAN + BOLD + "+----------------------------------------------------------+" + RESET);
         System.out.println();
     }
 
@@ -55,7 +56,7 @@ public final class ConsoleUtils {
      * @param topics list of available topic names
      */
     public static void printTopicMenu(List<String> topics) {
-        System.out.println(BOLD + UNDERLINE + "📚 Select a Topic:" + RESET);
+        System.out.println(BOLD + UNDERLINE + "[TOPICS] Select a Topic:" + RESET);
         System.out.println();
         for (int i = 0; i < topics.size(); i++) {
             System.out.printf("  %s[%d]%s  %s%s%s%n",
@@ -75,8 +76,8 @@ public final class ConsoleUtils {
      */
     public static void printQuestion(Question question, int current, int total) {
         System.out.println();
-        System.out.println(BLUE + "─────────────────────────────────────────────" + RESET);
-        System.out.printf("%sQuestion %d of %d%s%n", BOLD + MAGENTA, current, total, RESET);
+        System.out.println(BLUE + "------------------------------------------------------------" + RESET);
+        System.out.printf("%s[Question %d of %d]%s%n", BOLD + MAGENTA, current, total, RESET);
         System.out.println(BOLD + WHITE + question.text() + RESET);
         System.out.println();
 
@@ -97,9 +98,9 @@ public final class ConsoleUtils {
      */
     public static void printAnswerFeedback(boolean isCorrect, String correctAnswer, String correctText) {
         if (isCorrect) {
-            System.out.println(GREEN + BOLD + "  ✅ Correct!" + RESET);
+            System.out.println(GREEN + BOLD + "  [SUCCESS] Correct!" + RESET);
         } else {
-            System.out.printf("%s  ❌ Incorrect!%s The correct answer was: %s%s) %s%s%n",
+            System.out.printf("%s  [WRONG] Incorrect!%s The correct answer was: %s%s) %s%s%n",
                     RED + BOLD, RESET, YELLOW + BOLD, correctAnswer, correctText, RESET);
         }
     }
@@ -108,14 +109,14 @@ public final class ConsoleUtils {
      * Prints the prompt for user input.
      */
     public static void printInputPrompt() {
-        System.out.print(YELLOW + "  ➤ Your answer (A/B/C/D): " + RESET);
+        System.out.print(YELLOW + "  > Your answer (A/B/C/D): " + RESET);
     }
 
     /**
      * Prints an invalid input warning message.
      */
     public static void printInvalidInput() {
-        System.out.println(RED + "  ⚠ Invalid input. Please enter a valid option (A, B, C, or D)." + RESET);
+        System.out.println(RED + "  [!] Invalid input. Please enter a valid option (A, B, C, or D)." + RESET);
     }
 
     /**
@@ -125,9 +126,9 @@ public final class ConsoleUtils {
      */
     public static void printQuizResult(QuizResult result) {
         System.out.println();
-        System.out.println(CYAN + BOLD + "╔══════════════════════════════════════════════════════════╗" + RESET);
-        System.out.println(CYAN + BOLD + "║" + RESET + YELLOW + BOLD + "                  📊 QUIZ RESULTS 📊                    " + RESET + CYAN + BOLD + "║" + RESET);
-        System.out.println(CYAN + BOLD + "╚══════════════════════════════════════════════════════════╝" + RESET);
+        System.out.println(CYAN + BOLD + "+----------------------------------------------------------+" + RESET);
+        System.out.println(CYAN + BOLD + "|" + RESET + YELLOW + BOLD + "                     [ QUIZ RESULTS ]                     " + RESET + CYAN + BOLD + "|" + RESET);
+        System.out.println(CYAN + BOLD + "+----------------------------------------------------------+" + RESET);
         System.out.println();
 
         System.out.printf("  %sTopic:%s       %s%s%n", BOLD, RESET, result.getQuiz().topic(), RESET);
@@ -141,11 +142,11 @@ public final class ConsoleUtils {
                 result.getGrade(), RESET);
 
         System.out.println();
-        System.out.println(BOLD + UNDERLINE + "  Detailed Summary:" + RESET);
+        System.out.println(BOLD + UNDERLINE + "  [Detailed Summary]" + RESET);
         System.out.println();
 
         for (QuizResult.AnswerRecord record : result.getAnswerRecords()) {
-            String icon = record.correct() ? GREEN + "✅" : RED + "❌";
+            String icon = record.correct() ? GREEN + "[OK]" : RED + "[X] ";
             String userAns = record.userAnswer().isBlank() ? "Skipped" : record.userAnswer();
 
             System.out.printf("  %s %sQ%d:%s %s%n", icon, BOLD, record.question().id(), RESET,
@@ -167,15 +168,15 @@ public final class ConsoleUtils {
      */
     private static void printMotivationalMessage(double percentage) {
         if (percentage == 100) {
-            System.out.println(GREEN + BOLD + "  🏆 PERFECT SCORE! You're a genius! 🏆" + RESET);
+            System.out.println(GREEN + BOLD + "  [PRO] PERFECT SCORE! You're a genius!" + RESET);
         } else if (percentage >= 80) {
-            System.out.println(GREEN + "  🌟 Excellent work! You really know your stuff!" + RESET);
+            System.out.println(GREEN + "  [GREAT] Excellent work! You really know your stuff!" + RESET);
         } else if (percentage >= 60) {
-            System.out.println(YELLOW + "  👍 Good effort! Keep studying to improve." + RESET);
+            System.out.println(YELLOW + "  [GOOD] Good effort! Keep studying to improve." + RESET);
         } else if (percentage >= 40) {
-            System.out.println(YELLOW + "  📖 Not bad, but there's room for improvement!" + RESET);
+            System.out.println(YELLOW + "  [INFO] Not bad, but there's room for improvement!" + RESET);
         } else {
-            System.out.println(RED + "  💪 Don't give up! Review the material and try again." + RESET);
+            System.out.println(RED + "  [TIP] Don't give up! Review the material and try again." + RESET);
         }
     }
 
@@ -200,7 +201,7 @@ public final class ConsoleUtils {
      * Prints a separator line.
      */
     public static void printSeparator() {
-        System.out.println(DIM + "──────────────────────────────────────────────────────────" + RESET);
+        System.out.println(DIM + "------------------------------------------------------------" + RESET);
     }
 
     /**
@@ -212,7 +213,7 @@ public final class ConsoleUtils {
     public static void printQuizHeader(String topic, int count) {
         System.out.println();
         printSeparator();
-        System.out.printf("  %s🚀 Starting Quiz: %s%s  |  %s%d questions%s%n",
+        System.out.printf("  %s[START] Starting Quiz: %s%s  |  %s%d questions%s%n",
                 BOLD + CYAN, topic, RESET, DIM, count, RESET);
         printSeparator();
     }

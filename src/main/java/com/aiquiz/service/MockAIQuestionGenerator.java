@@ -30,7 +30,7 @@ import java.util.stream.Collectors;
  *       // return parseQuestionsFromJson(response.body());
  *       }</pre>
  *   </li>
- *   <li>In {@code Main.java}, swap: {@code new MockAIQuestionGenerator()} → {@code new LLMQuestionGenerator(apiKey)}.</li>
+ *   <li>In {@code Main.java}, swap: {@code new MockAIQuestionGenerator()} -> {@code new LLMQuestionGenerator(apiKey)}.</li>
  * </ol>
  */
 public class MockAIQuestionGenerator implements QuestionGeneratorService {
@@ -62,7 +62,7 @@ public class MockAIQuestionGenerator implements QuestionGeneratorService {
      * "Generates" questions by shuffling the pre-built pool for the given topic
      * and returning the requested number of questions.
      *
-     * <p><b>🔌 PLUG IN REAL LLM HERE:</b> Replace the body of this method with
+     * <p><b>[LLM] PLUG IN REAL LLM HERE:</b> Replace the body of this method with
      * an HTTP call to an LLM API (OpenAI, Gemini, Anthropic, etc.). Parse the
      * JSON response into {@link Question} objects and return them.</p>
      *
@@ -74,8 +74,8 @@ public class MockAIQuestionGenerator implements QuestionGeneratorService {
     @Override
     public List<Question> generateQuestions(String topic, int numberOfQuestions) {
 
-        // ─────────────────────────────────────────────────────────────────
-        // 🔌 LLM INTEGRATION POINT
+        // ===================================================================
+        // [LLM] INTEGRATION POINT
         //
         // To integrate a real AI model, replace everything below with:
         //
@@ -89,7 +89,7 @@ public class MockAIQuestionGenerator implements QuestionGeneratorService {
         //      return parseQuestions(jsonResponse);
         //
         // See class-level Javadoc for a full example.
-        // ─────────────────────────────────────────────────────────────────
+        // ===================================================================
 
         List<Question> pool = questionBank.get(topic);
 
@@ -118,17 +118,17 @@ public class MockAIQuestionGenerator implements QuestionGeneratorService {
                 ));
     }
 
-    // ═══════════════════════════════════════════════════════════════════
+    // ===================================================================
     //  QUESTION BANK INITIALIZATION
-    // ═══════════════════════════════════════════════════════════════════
+    // ===================================================================
 
     /**
      * Populates the internal question bank with questions for each topic.
-     * Each topic has 8–10 questions; the quiz randomly selects a subset.
+     * Each topic has 8-10 questions; the quiz randomly selects a subset.
      */
     private void initializeQuestionBank() {
 
-        // ── CORE JAVA ───────────────────────────────────────────────────
+        // --- CORE JAVA --------------------------------------------------
         questionBank.put("Core Java", List.of(
                 new Question(1,
                         "Which keyword is used to prevent a class from being subclassed in Java?",
@@ -177,7 +177,7 @@ public class MockAIQuestionGenerator implements QuestionGeneratorService {
                         "C")
         ));
 
-        // ── GENERAL SCIENCE ─────────────────────────────────────────────
+        // --- GENERAL SCIENCE --------------------------------------------
         questionBank.put("General Science", List.of(
                 new Question(1,
                         "What is the chemical symbol for Gold?",
@@ -193,7 +193,7 @@ public class MockAIQuestionGenerator implements QuestionGeneratorService {
                         "C"),
                 new Question(4,
                         "What is the speed of light in a vacuum (approximately)?",
-                        List.of("3 × 10⁶ m/s", "3 × 10⁸ m/s", "3 × 10¹⁰ m/s", "3 × 10⁴ m/s"),
+                        List.of("3 * 10^6 m/s", "3 * 10^8 m/s", "3 * 10^10 m/s", "3 * 10^4 m/s"),
                         "B"),
                 new Question(5,
                         "Which gas makes up the majority of Earth's atmosphere?",
@@ -217,11 +217,11 @@ public class MockAIQuestionGenerator implements QuestionGeneratorService {
                         "B"),
                 new Question(10,
                         "What is Newton's Second Law of Motion?",
-                        List.of("F = ma", "E = mc²", "F = mv", "P = mv"),
+                        List.of("F = ma", "E = mc^2", "F = mv", "P = mv"),
                         "A")
         ));
 
-        // ── WORLD HISTORY ───────────────────────────────────────────────
+        // --- WORLD HISTORY ----------------------------------------------
         questionBank.put("World History", List.of(
                 new Question(1,
                         "In which year did World War II end?",
@@ -267,11 +267,11 @@ public class MockAIQuestionGenerator implements QuestionGeneratorService {
                         "B")
         ));
 
-        // ── DATA STRUCTURES & ALGORITHMS ────────────────────────────────
+        // --- DATA STRUCTURES & ALGORITHMS -------------------------------
         questionBank.put("Data Structures & Algorithms", List.of(
                 new Question(1,
                         "What is the worst-case time complexity of Quick Sort?",
-                        List.of("O(n)", "O(n log n)", "O(n²)", "O(log n)"),
+                        List.of("O(n)", "O(n log n)", "O(n^2)", "O(log n)"),
                         "C"),
                 new Question(2,
                         "Which data structure uses FIFO (First In, First Out) ordering?",
@@ -279,7 +279,7 @@ public class MockAIQuestionGenerator implements QuestionGeneratorService {
                         "B"),
                 new Question(3,
                         "What is the space complexity of Merge Sort?",
-                        List.of("O(1)", "O(log n)", "O(n)", "O(n²)"),
+                        List.of("O(1)", "O(log n)", "O(n)", "O(n^2)"),
                         "C"),
                 new Question(4,
                         "Which traversal visits the root node first, then left subtree, then right subtree?",
@@ -301,11 +301,11 @@ public class MockAIQuestionGenerator implements QuestionGeneratorService {
                         "C"),
                 new Question(8,
                         "What is the best-case time complexity of Bubble Sort?",
-                        List.of("O(n²)", "O(n log n)", "O(n)", "O(1)"),
+                        List.of("O(n^2)", "O(n log n)", "O(n)", "O(1)"),
                         "C"),
                 new Question(9,
                         "A balanced BST with n nodes has a height of approximately?",
-                        List.of("O(n)", "O(log n)", "O(n log n)", "O(√n)"),
+                        List.of("O(n)", "O(log n)", "O(n log n)", "O(sqrt(n))"),
                         "B"),
                 new Question(10,
                         "Which data structure is most efficient for implementing a priority queue?",

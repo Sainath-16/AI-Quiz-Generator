@@ -38,9 +38,9 @@ public class AnswerValidationService {
 
     /**
      * Checks whether the given input is a structurally valid answer choice
-     * for the question (i.e., falls within the valid option range A–D, etc.).
+     * for the question (i.e., falls within the valid option range A-D, etc.).
      *
-     * <p>This does NOT check correctness — only whether the format is acceptable.
+     * <p>This does NOT check correctness - only whether the format is acceptable.
      *
      * @param question  the question with its options
      * @param userInput the user's raw input
@@ -62,7 +62,7 @@ public class AnswerValidationService {
         char ch = trimmed.charAt(0);
 
         // Must be a letter within the valid range for the number of options
-        // e.g., 4 options → A(0), B(1), C(2), D(3) → valid range A–D
+        // e.g., 4 options -> A(0), B(1), C(2), D(3) -> valid range A-D
         return ch >= 'A' && ch < ('A' + question.optionCount());
     }
 
